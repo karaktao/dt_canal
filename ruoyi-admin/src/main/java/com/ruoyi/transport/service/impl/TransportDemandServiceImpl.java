@@ -1,11 +1,15 @@
 package com.ruoyi.transport.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
+import com.ruoyi.transport.domain.TransportDemandWithCity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.transport.mapper.TransportDemandMapper;
 import com.ruoyi.transport.domain.TransportDemand;
 import com.ruoyi.transport.service.ITransportDemandService;
+
 
 /**
  * 物流发布Service业务层处理
@@ -29,6 +33,18 @@ public class TransportDemandServiceImpl implements ITransportDemandService
     public TransportDemand selectTransportDemandById(Long id)
     {
         return transportDemandMapper.selectTransportDemandById(id);
+    }
+
+    /**
+     * 查询已发布的 vessel_to_cargo，并带有城市信息
+     *
+     * @param params 可选参数（如 originPortId、originPort）
+     * @return 带城市信息的物流发布列表
+     */
+    @Override
+    public List<TransportDemandWithCity> selectPublishedVesselToCargoWithCities(Map<String, Object> params)
+    {
+        return transportDemandMapper.selectPublishedVesselToCargoWithCities(params);
     }
 
     /**

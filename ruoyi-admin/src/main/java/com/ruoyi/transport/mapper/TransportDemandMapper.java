@@ -2,6 +2,9 @@ package com.ruoyi.transport.mapper;
 
 import java.util.List;
 import com.ruoyi.transport.domain.TransportDemand;
+import com.ruoyi.transport.domain.TransportDemandWithCity;
+import java.util.Map;
+
 
 /**
  * 物流发布Mapper接口
@@ -26,6 +29,14 @@ public interface TransportDemandMapper
      * @return 物流发布集合
      */
     public List<TransportDemand> selectTransportDemandList(TransportDemand transportDemand);
+
+    /**
+     * 查询已发布的 vessel_to_cargo，并带有城市信息
+     *
+     * @return 带城市名的物流发布集合
+     */
+    public List<TransportDemandWithCity> selectPublishedVesselToCargoWithCities(Map<String, Object> params);
+
 
     /**
      * 新增物流发布
@@ -58,4 +69,6 @@ public interface TransportDemandMapper
      * @return 结果
      */
     public int deleteTransportDemandByIds(Long[] ids);
+
+
 }

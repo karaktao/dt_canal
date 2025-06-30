@@ -101,6 +101,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
+    <select id="selectPublishedVesselToCargoWithCities"
+            resultType="com.ruoyi.transport.domain.TransportDemandWithCity">
+        SELECT
+            t.*,
+            origin_city.name AS origin_city,
+            dest_city.name AS destination_city
+        FROM dt_transport_demand t
+                 LEFT JOIN bgv_berth_info origin_berth
+                           ON t.origin_port_id = origin_berth.isrs
+                 LEFT JOIN bgv_berth_info dest_berth
+                           ON t.destination_port_id = dest_berth.isrs
+                 LEFT JOIN nl_unlocode origin_city
+                           ON origin_berth.unlocode = origin_city.locode
+                 LEFT JOIN nl_unlocode dest_city
+                           ON dest_berth.unlocode = dest_city.locode
+        WHERE t.assignment_type = 'vessel_to_cargo'
+          AND t.status = 'Published';
+        <if test="originPortId != null and originPortId != ''">
+            AND t.origin_port_id = #{originPortId}
+        </if>
+        <if test="originPort != null and originPort != ''">
+            AND t.origin_port LIKE CONCAT('%', #{originPort}, '%')
+        </if>
+    </select>
+
     <insert id="insertTransportDemand" parameterType="TransportDemand" useGeneratedKeys="true" keyProperty="id">
         insert into dt_transport_demand
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -1,6 +1,7 @@
 package com.ruoyi.transport.controller;
 
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import com.ruoyi.transport.domain.TransportDemand;
 import com.ruoyi.transport.service.ITransportDemandService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.RequestParam; // ✅ 解决 RequestParam 报错
+import com.ruoyi.transport.domain.TransportDemandWithCity;  // ✅ 导入 TransportDemandWithCity
+
 
 /**
  * 物流发布Controller
@@ -44,6 +48,14 @@ public class TransportDemandController extends BaseController
         startPage();
         List<TransportDemand> list = transportDemandService.selectTransportDemandList(transportDemand);
         return getDataTable(list);
+    }
+
+    /**
+     * 查询物流发布列表,返回带城市的货物信息
+     */
+    @GetMapping("/listWithCity")
+    public List<TransportDemandWithCity> listWithCity(@RequestParam Map<String, Object> params) {
+        return transportDemandService.selectPublishedVesselToCargoWithCities(params);
     }
 
     /**

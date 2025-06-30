@@ -2,6 +2,9 @@ package com.ruoyi.transport.service;
 
 import java.util.List;
 import com.ruoyi.transport.domain.TransportDemand;
+import java.util.Map;
+import com.ruoyi.transport.domain.TransportDemand;
+import com.ruoyi.transport.domain.TransportDemandWithCity;
 
 /**
  * 物流发布Service接口
@@ -18,6 +21,15 @@ public interface ITransportDemandService
      * @return 物流发布
      */
     public TransportDemand selectTransportDemandById(Long id);
+
+    /**
+     * 查询已发布的 vessel_to_cargo，并带有城市信息
+     *
+     * @param params 可选参数（如 originPortId、originPort）
+     * @return 带城市信息的物流发布列表
+     */
+    List<TransportDemandWithCity> selectPublishedVesselToCargoWithCities(Map<String, Object> params); // ✅ 新增方法
+
 
     /**
      * 查询物流发布列表
